@@ -1,7 +1,8 @@
 from Right import *
+from Arduino import *
 class RightC:
     def __init__(myobj):
-        myobj.color = Color()
+        myobj.color = Color(2)
         myobj.temp = Temperature()
     def seeColor(self):
         print "Color ", self.color.getColor()
@@ -11,5 +12,13 @@ class RightC:
 abc = RightC()
 abc.seeColor()
 abc.seeTemperature()
-abc.color.postData()
 abc.seeColor()
+d=Dht()
+print("Cool")
+d.updateValue()
+if d.getValueHumidity()>60:
+    print "Humidity High"
+    abc.color.postData()
+else:
+    print "Humidity Low"
+

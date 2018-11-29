@@ -13,10 +13,12 @@ def parseString(string,type):
 			return j[1]
 		if j[0]=="Smoke" and type=="S":
 			return j[1]
-print(parseString("Temperature:27,Humidity:55,Amonia:120,Smoke:150","S"))
+#print(parseString("Temperature:27,Humidity:55,Amonia:120,Smoke:150","S"))
 
 def gather(obj,type):
+    try:
 	string=gathering.gatherString()
+        print "good"
         print string
 	t=parseString(string,"T")
 	h=parseString(string,"H")
@@ -34,4 +36,7 @@ def gather(obj,type):
             obj.smoke=s
         else:
             print("Wrong Parameter...")
+    except Exception as e:
+        print e
+    
 
