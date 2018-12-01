@@ -1,0 +1,27 @@
+
+
+create table things(id varchar(10) not null, class varchar(20), name varchar(20), primary key(id));
+
+
+create table PhilipsHueLight(sl_no integer not null auto_increment, id varchar(10) not null,temperature integer, brightness integer, color integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key f_id(id) references things(id) on update cascade on delete restrict);
+
+
+create table DHT(sl_no integer not null auto_increment, id varchar(10) not null, temperature integer, humidity integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key fd_id(id) references things(id) on update cascade on delete restrict);
+
+
+create table MQ2(sl_no integer not null auto_increment, id varchar(10) not null, smoke integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key fm2_id(id) references things(id) on update cascade on delete restrict);
+
+
+create table MQ135(sl_no integer not null auto_increment, id varchar(10) not null, amonia integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key fm135_id(id) references things(id) on update cascade on delete restrict);
+
+
+create table Xbee(sl_no integer not null auto_increment, id varchar(10) not null, temperature integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key fxb_id(id) references things(id) on update cascade on delete restrict);
+
+
+insert into things(id, class, name) values("DHT1","Arduino","DHT");
+
+insert into things(id, class, name) values("MQ2_1","Arduino","MQ2");
+
+insert into things(id, class, name) values("MQ135_1","Arduino","MQ135");
+
+insert into things(id, class, name) values("Xbee_1","Xbee","xbee_temperature");

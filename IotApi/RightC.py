@@ -2,7 +2,7 @@ from Right import *
 from Arduino import *
 class RightC:
     def __init__(myobj):
-        myobj.color = Color(2)
+        myobj.color = Color(1)
         myobj.temp = Temperature()
     def seeColor(self):
         print "Color ", self.color.getColor()
