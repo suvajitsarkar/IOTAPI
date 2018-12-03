@@ -1,4 +1,6 @@
 import requests
+from .DatabaseC import dbEntry
+import time
 url1 = 'http://192.168.0.4:8080/rest/items/Color1/'
 url2 = 'http://192.168.0.4:8080/rest/items/HueColorLamp3_Color/'
 url3 = 'http://192.168.0.4:8080/rest/items/HueColorLamp3_ColorTemperature/state'
@@ -24,17 +26,30 @@ class Color:
             response = requests.get(url2+'state', data=data)
             response_t = requests.get(url4,data=data)
         x = response.text.split(",")
+        print(time.ctime(),x[0],x[1],x[2],response_t.text)
         myobj.color=x[0]
         myobj.saturation= x[1]
         myobj.brightness = x[2]
         myobj.temperature = response_t.text
     def postData(myobj):
-        data ='142,52,61'
-        if myobj.idn==1:
+        data ='10,52,61'
+        if myobj.idn=="Hue_1":
             response = requests.post(url1,data=data)
         else:
             response = requests.post(url2,data=data)
-        myobj.fetchData()
-c= Color("Hue_2")
-c.updateValue()
-print(c.getColor(),c.getBrightness(),c.getTemperature())
+        myobj.updateValue()
+    def insertDB(self):
+        sql="insert into PhilipsHueLight(id, color, saturation, brightness, temperature) values('%s','%d','%d','%d','%d')"%(self.idn,int(self.color),int(self.saturation),int(self.brightness),int(self.temperature))
+        dbEntry(sql)
+if __name__ == "__main__":
+    while(1):
+        c= Color("Hue_2")
+        c.updateValue()
+        print(time.ctime(),c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
+        c.postData()
+        c.insertDB()
+        c= Color("Hue_1")
+        c.updateValue()
+        print(time.ctime(),c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
+        c.postData()
+        c.insertDB()

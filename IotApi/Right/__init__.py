@@ -1,2 +1,1 @@
-from Color import Color
-from Temperature import Temperature
+from .Color import Color

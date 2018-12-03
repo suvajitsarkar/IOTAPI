@@ -3,8 +3,7 @@
 create table things(id varchar(10) not null, class varchar(20), name varchar(20), primary key(id));
 
 
-create table PhilipsHueLight(sl_no integer not null auto_increment, id varchar(10) not null,temperature integer, brightness integer, color integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key f_id(id) references things(id) on update cascade on delete restrict);
-
+create table PhilipsHueLight(sl_no integer not null auto_increment, id varchar(10) not null, color integer, saturation integer, brightness integer, temperature integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key f_id(id) references things(id) on update cascade on delete restrict);
 
 create table DHT(sl_no integer not null auto_increment, id varchar(10) not null, temperature integer, humidity integer, entry_time timestamp DEFAULT CURRENT_TIMESTAMP, primary key(sl_no), foreign key fd_id(id) references things(id) on update cascade on delete restrict);
 
