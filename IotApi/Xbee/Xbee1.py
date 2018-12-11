@@ -9,7 +9,7 @@ class xbee1:
         self.twister=twister
     def updateValue(self):
         try:
-            ser = serial.Serial('/dev/ttyUSB0')
+            ser = serial.Serial('/dev/ttyUSB1')
             s1=1023
             #by=ser.read().hex()
             xbe= ZigBee(ser)

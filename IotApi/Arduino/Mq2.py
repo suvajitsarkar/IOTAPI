@@ -1,14 +1,15 @@
-from .Gather import gather
+from .Gather import gatherclass
 from .DatabaseC import dbEntry
 import time
 class Mq2:
     def __init__(self,idn,value=0):
         self.idn=idn
         self.smoke=value
+        self.g=gatherclass()
     def getValue(self):
         return self.smoke
     def updateValue(self):
-        gather(self,"Smoke")
+        self.g.gather(self,"Smoke")
     def insertDB(self):
         sql="insert into MQ2(id, smoke) values('%s','%d')"%(self.idn,float(self.smoke))
         dbEntry(sql)

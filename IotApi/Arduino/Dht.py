@@ -1,4 +1,4 @@
-from .Gather import gather
+from .Gather import gatherclass
 from .DatabaseC import dbEntry
 import time
 class Dht:
@@ -6,12 +6,13 @@ class Dht:
         self.idn=idn
         self.temperature=t
         self.humidity=h
+        self.g=gatherclass()
     def getValueTemperature(self):
         return self.temperature
     def getValueHumidity(self):
         return self.humidity
     def updateValue(self):
-        gather(self,"TH")
+        self.g.gather(self,"TH")
     def insertDB(self):
         sql="insert into DHT(id, temperature, humidity) values('%s','%d','%d')"%(self.idn,float(self.temperature),float(self.humidity))
         dbEntry(sql)

@@ -1,14 +1,15 @@
-from .Gather import gather
+from .Gather import gatherclass
 from .DatabaseC import dbEntry
 import time
 class Mq135:
     def __init__(self,idn,value=0):
         self.idn=idn
         self.amonia=value
+        self.g=gatherclass()
     def getValue(self):
         return self.amonia
     def updateValue(self):
-        gather(self,"Amonia")
+        self.g.gather(self,"Amonia")
     def insertDB(self):
         if self.amonia != None:
             sql="insert into MQ135(id, amonia) values('%s','%d')"%(self.idn,float(self.amonia))
