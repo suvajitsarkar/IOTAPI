@@ -1,7 +1,8 @@
 import serial
-from xbee import ZigBee
-from .DatabaseC import dbEntry
+from xbee import *
+from DatabaseC import dbEntry
 import time
+from thinkSpeak import updateCloud
 class xbee1:
     def __init__(self,idn,temp=1023,twister=0):
         self.idn=idn
@@ -9,7 +10,7 @@ class xbee1:
         self.twister=twister
     def updateValue(self):
         try:
-            ser = serial.Serial('/dev/ttyUSB1')
+            ser = serial.Serial('/dev/ttyUSB0')
             s1=1023
             #by=ser.read().hex()
             xbe= ZigBee(ser)
@@ -36,9 +37,18 @@ class xbee1:
     def insertDB(self):
         sql="insert into Xbee(id, temperature, twister) values('%s','%f','%d')"%(self.idn,float(self.temperature),float(self.twister))
         dbEntry(sql)
-if __name__ == "__main":
-    x= xbee1("Xbee_1")
-    x.updateValue()
-    print("Temperature= ",x.getTemperature())
-    print("Twister= ",x.getTwister())
-    x.insertDB()
+if __name__ == "__main__":
+    print("Welcome main")
+    x = xbee1("Xbee_1")
+    print("Welcome object")
+    while True:
+        try:
+            print("Start While")
+            x.updateValue()
+            print("Values Updated")
+            print("Temperature= ",x.getTemperature())
+            print("Twister= ",x.getTwister())
+            updateCloud("XCTGKORM1EE5HZ95", x.getTemperature(), x.getTwister())
+            x.insertDB()
+        except Exception as e:
+            print("Exception:- ", e)

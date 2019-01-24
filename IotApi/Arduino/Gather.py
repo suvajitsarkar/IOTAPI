@@ -2,7 +2,7 @@ import time
 import serial
 class gatherclass:
     def __init__(self):
-        self.ser=serial.Serial("/dev/ttyUSB0",115200)
+        self.ser=serial.Serial("/dev/ttyUSB1",115200)
         self.ser.baudrate=115200
         #print(self.ser.readline().decode("utf-8"))
     def gatherString(self):

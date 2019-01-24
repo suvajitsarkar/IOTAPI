@@ -1,10 +1,13 @@
 import requests
-from .DatabaseC import dbEntry
+from DatabaseC import dbEntry
 import time
+from thinkSpeak import updateCloud
 url1 = 'http://192.168.0.4:8080/rest/items/Color1/'
 url2 = 'http://192.168.0.4:8080/rest/items/HueColorLamp3_Color/'
 url3 = 'http://192.168.0.4:8080/rest/items/HueColorLamp3_ColorTemperature/state'
 url4 = 'http://192.168.0.4:8080/rest/items/HueColorLamp1_ColorTemperature/state'
+api1 = '6PXRQW3QSAH7EELA'
+api2 = 'KW9UKEZGSVXYJD25'
 class Color:
     def __init__(myobj,idn):
         myobj.idn=idn
@@ -31,8 +34,7 @@ class Color:
         myobj.saturation= x[1]
         myobj.brightness = x[2]
         myobj.temperature = response_t.text
-    def postData(myobj):
-        data ='10,52,61'
+    def postData(myobj,data):
         if myobj.idn=="Hue_1":
             response = requests.post(url1,data=data)
         else:
@@ -44,12 +46,17 @@ class Color:
 if __name__ == "__main__":
     while(1):
         c= Color("Hue_2")
+        data ='10,52,61'
         c.updateValue()
+        updateCloud(api1,c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
         print(time.ctime(),c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
-        c.postData()
+        c.postData(data)
         c.insertDB()
+        updateCloud(api1,c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
         c= Color("Hue_1")
         c.updateValue()
+        updateCloud(api2,c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
         print(time.ctime(),c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
-        c.postData()
+        c.postData(data)
         c.insertDB()
+        updateCloud(api2,c.getColor(),c.getSaturation(),c.getBrightness(),c.getTemperature())
